@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" fx:id="anchorPaneE1" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AffichageOrdAdminController">
+   <children>
+      <Text fill="#228032" layoutX="205.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liste des Ordonnances">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <TableView fx:id="tableView" layoutX="31.0" layoutY="82.0" prefHeight="302.0" prefWidth="551.0">
+         <columns>
+            <TableColumn fx:id="ColDate" prefWidth="137.0" text="Date Ordonnance" />
+            <TableColumn fx:id="Colcontenue" prefWidth="194.3333740234375" text="Contenue" />
+            <TableColumn fx:id="ColId" prefWidth="33.33331298828125" text="ID" />
+         </columns>
+      </TableView>
+      <Button layoutX="22.0" layoutY="21.0" mnemonicParsing="false" onAction="#RDVAdmin" style="-fx-background-color: #3a8eba;" text="Liste Rendez vous " textFill="WHITE" />
+      <Text fill="#228032" layoutX="542.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin" textAlignment="CENTER" wrappingWidth="43.5064697265625">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AffichageRdvAdminController">
+   <children>
+      <Text fill="#228032" layoutX="200.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liste des Rendez vous ">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Text>
+      <TableView fx:id="tableView" layoutX="24.0" layoutY="59.0" prefHeight="288.0" prefWidth="564.0">
+         <columns>
+            <TableColumn fx:id="ColDate" prefWidth="107.33331298828125" text="date rendez vous" />
+            <TableColumn fx:id="ColStart" text="heure debut " />
+            <TableColumn fx:id="ColEnd" prefWidth="74.3333740234375" text="heure fin" />
+            <TableColumn fx:id="ColTitre" prefWidth="101.33331298828125" text="nom du patient" />
+            <TableColumn fx:id="ColEtat" prefWidth="69.3333740234375" text="etat" />
+         </columns>
+      </TableView>
+      <Button layoutX="32.0" layoutY="17.0" mnemonicParsing="false" onAction="#OrdonnanceAdmin" style="-fx-background-color: #3a8eba;" text="Liste Ordonnance" textFill="WHITE" />
+      <Button layoutX="24.0" layoutY="362.0" mnemonicParsing="false" onAction="#PatientAffichage" style="-fx-background-color: #3a8eba;" text="Patient" textFill="WHITE" />
+      <Button layoutX="104.0" layoutY="362.0" mnemonicParsing="false" onAction="#DocteurAffichage" style="-fx-background-color: #3a8eba;" text="Docteur" textFill="WHITE" />
+      <Text fill="#228032" layoutX="552.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin" />
+   </children>
+</AnchorPane>
