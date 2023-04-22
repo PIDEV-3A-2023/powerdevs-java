@@ -19,5 +19,6 @@ public interface IService <T> {
     public void supprimerRdv(int id);
     public RDV getRdv(int id);
     public void modifierRdv(RDV R);
+     public List<RDV>affichageRdvTrieer ();
      
 }

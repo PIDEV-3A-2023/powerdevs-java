@@ -5,6 +5,7 @@
  */
 package gui;
 
+import entites.Ordonnance;
 import entites.RDV;
 import static gui.AffichageRdvController.rdv;
 import java.io.IOException;
@@ -14,6 +15,8 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +31,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import services.ServiceRdv;
@@ -63,6 +68,10 @@ public class AffichageRdvDocteurController implements Initializable {
     @FXML
     private TableColumn<String, Integer> ColID;
     public static RDV rdv ; 
+    @FXML
+    private Button tri;
+    @FXML
+    private TextField recherche;
     /**
      * Initializes the controller class.
      */
@@ -240,6 +249,71 @@ public class AffichageRdvDocteurController implements Initializable {
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                 };
+    }
+
+    @FXML
+    private void trieDate(ActionEvent event) {
+         a = new ServiceRdv();
+        obList =  a.affichageRdvTrieer();
+        ColID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        ColTitre.setCellValueFactory(new PropertyValueFactory<>("titre"));
+       ColEtat.setCellValueFactory(new PropertyValueFactory<>("etat"));
+        ColDate.setCellValueFactory(new PropertyValueFactory<>("date_rdv"));
+         ColStart.setCellValueFactory(new PropertyValueFactory<>("starttime"));
+           ColEnd.setCellValueFactory(new PropertyValueFactory<>("endtime"));
+                
+
+        addButtonModifToTable();
+        addButtonDeleteToTable();
+   
+        tableView.setItems(obList);
+
+        addButtonModifToTable();
+    }
+
+    @FXML
+    private void RechercheHandle(KeyEvent event) {
+          FilteredList<RDV> filteredList = new FilteredList<>(obList, c -> true);
+
+        recherche.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            if (recherche.getText().isEmpty()) {
+
+                addButtonModifToTable();
+                addButtonDeleteToTable();
+
+            }
+            filteredList.setPredicate(reclamation -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    btn = new Button("Modifier");
+                    btnSupprimer = new Button("Supprimer");
+
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+                if (String.valueOf(reclamation.getTitre()).toLowerCase().indexOf(lowerCaseFilter) != -1) {
+
+                    return true;
+                } else if (String.valueOf(reclamation.getEtat()).toLowerCase().indexOf(lowerCaseFilter) != -1) {
+
+                    return true;
+                }else if (String.valueOf(reclamation.getDate_rdv()).toLowerCase().indexOf(lowerCaseFilter) != -1) {
+
+                    return true;
+                } 
+                else {
+                    btn = new Button("Modifier");
+                    btnSupprimer = new Button("Supprimer");
+                    return false;
+                }
+
+            });
+
+        });
+        SortedList<RDV> sortedData = new SortedList<>(filteredList);
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+
+        tableView.setItems(sortedData);
     }
     }    
     

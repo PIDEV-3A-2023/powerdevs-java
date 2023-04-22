@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -29,7 +31,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import services.ServiceOrdonnance;
@@ -58,6 +62,8 @@ public class AffichageOrdonnanceController implements Initializable {
     public static Ordonnance ord ; 
     @FXML
     private TableColumn<String, Integer> ColId;
+    @FXML
+    private TextField recherche;
 
     /**
      * Initializes the controller class.
@@ -232,6 +238,49 @@ public class AffichageOrdonnanceController implements Initializable {
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                 };
+    }
+
+    @FXML
+    private void RechercheHandle(KeyEvent event) {
+         FilteredList<Ordonnance> filteredList = new FilteredList<>(obList, b -> true);
+
+        recherche.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            if (recherche.getText().isEmpty()) {
+
+                addButtonModifToTable();
+                addButtonDeleteToTable();
+
+            }
+            filteredList.setPredicate(reclamation -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    btn = new Button("Modifier");
+                    btnSupprimer = new Button("Supprimer");
+
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+ if (String.valueOf(reclamation.getDateord()).toLowerCase().indexOf(lowerCaseFilter) != -1) {
+
+                    return true;
+                } else if (String.valueOf(reclamation.getContenue()).toLowerCase().indexOf(lowerCaseFilter) != -1) {
+
+                    return true;
+                } 
+                else {
+                    btn = new Button("Modifier");
+                    btnSupprimer = new Button("Supprimer");
+                    return false;
+                }
+
+            });
+
+        });
+        SortedList<Ordonnance> sortedData = new SortedList<>(filteredList);
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+
+        tableView.setItems(sortedData);
+
     }
 
   

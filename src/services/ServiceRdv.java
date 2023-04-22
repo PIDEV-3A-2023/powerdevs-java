@@ -134,6 +134,39 @@ public class ServiceRdv implements IService<RDV> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public ObservableList<RDV> affichageRdvTrieer() {
+        String req= "SELECT * FROM rdv order by date_rdv DESC";;
+        List<RDV>listR = new ArrayList<>();
+        
+        
+        try{
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(req);
+            
+            while(rs.next()) {
+                int id= rs.getInt("id");
+                Date date_rdv = rs.getDate("date_rdv");
+                Time starttime = rs.getTime("starttime");
+                Time endtime = rs.getTime("endtime");
+                String titre = rs.getString("titre");
+               String etat = rs.getString("etat");
+                
+                RDV p = new RDV(id,date_rdv,starttime,endtime,titre,etat);
+              
+               obListR.add(p);
+
+              
+            }   
+            
+            
+            
+        }catch(Exception ex) {
+            System.out.println("exception ="+ex.getMessage() );
+        }
+        return obListR;
+    }
+
     
     }
 

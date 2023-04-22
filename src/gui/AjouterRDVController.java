@@ -71,32 +71,30 @@ public class AjouterRDVController implements Initializable {
 
     @FXML
     private void AjoutRdvHandel(ActionEvent event) {
-        String titre  = nomR.getText();
-        String etat  = etatR.getText();
-       LocalDate dater = dateR.getValue();
-        LocalTime heuredebut = startR.getValue();
-         LocalTime heurefin = endR.getValue();
-         ZoneId defaultZoneId = ZoneId.systemDefault();
-         Date date = (Date) Date.from(dater.atStartOfDay(defaultZoneId).toInstant());
-         Time timedebut = java.sql.Time.valueOf(heuredebut);
-          Time timefin = java.sql.Time.valueOf(heurefin);
-        
-     
-        
-      
-        
-     if (titre.isEmpty()) {
-        showAlert("Nom obligatoire", "Nom doit être non vide");
-    } else if (etat.isEmpty()) {
-        showAlert("etat doit etre non vide ", "etat doit être non vide");
-    } else {
-       
-            RDV rdv = new RDV(date, timedebut, timefin, titre, etat);
-            sr.ajouterRdv(rdv);
-            showAlert("rendez vous  ajouté", "rendez vous ajouté avec succès");
-    }
-     
+             String titre  = nomR.getText();
+    String etat  = etatR.getText();
+    LocalDate dateRdv = dateR.getValue();
+    LocalTime heureDebut = startR.getValue();
+    LocalTime heureFin = endR.getValue();
 
+    if (titre.isEmpty()) {
+        showAlert("Nom obligatoire", "Le nom doit être non vide");
+    } else if (etat.isEmpty()) {
+        showAlert("État obligatoire", "L'état doit être non vide");
+    } else if (dateRdv == null || dateRdv.isBefore(LocalDate.now())) {
+        showAlert("Date invalide", "Veuillez saisir une date valide ");
+    } else if (heureDebut == null || heureFin == null || heureDebut.isBefore(LocalTime.of(8, 0)) || heureFin.isAfter(LocalTime.of(17, 0)) || heureFin.isBefore(heureDebut)) {
+        showAlert("Heures invalides", "Veuillez saisir des heures valides entre 8heure et 17 heure ");
+    } else {
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        Date date = Date.from(dateRdv.atStartOfDay(defaultZoneId).toInstant());
+        Time timeDebut = Time.valueOf(heureDebut);
+        Time timeFin = Time.valueOf(heureFin);
+        
+        RDV rdv = new RDV(date, timeDebut, timeFin, titre, etat);
+        sr.ajouterRdv(rdv);
+        showAlert("Rendez-vous ajouté", "Rendez-vous ajouté avec succès");
+    }
     
 }
 

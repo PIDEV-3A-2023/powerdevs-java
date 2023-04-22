@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -14,7 +15,7 @@
             <Font size="23.0" />
          </font>
       </Text>
-      <TableView fx:id="tableView" layoutX="32.0" layoutY="62.0" prefHeight="327.0" prefWidth="553.0">
+      <TableView fx:id="tableView" layoutX="32.0" layoutY="99.0" prefHeight="290.0" prefWidth="545.0">
          <columns>
             <TableColumn fx:id="ColDate" prefWidth="107.33331298828125" text="date rendez vous" />
             <TableColumn fx:id="ColStart" text="heure debut " />
@@ -26,5 +27,7 @@
       </TableView>
       <Button layoutX="32.0" layoutY="17.0" mnemonicParsing="false" onAction="#ordonnanceDocteur" style="-fx-background-color: #3a8eba;" text="Liste des Ordonnances" textFill="WHITE" />
       <Text fill="#228032" layoutX="542.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Docteur" />
+      <Button fx:id="tri" layoutX="442.0" layoutY="17.0" mnemonicParsing="false" onAction="#trieDate" style="-fx-background-color: #3a8eba;" text="Date Desc" textFill="WHITE" />
+      <TextField fx:id="recherche" layoutX="26.0" layoutY="59.0" onKeyPressed="#RechercheHandle" prefHeight="25.0" prefWidth="184.0" promptText="Rechercher" />
    </children>
 </AnchorPane>
